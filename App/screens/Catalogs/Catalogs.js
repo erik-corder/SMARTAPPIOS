@@ -1,0 +1,137 @@
+import React, { Component } from 'react';
+import {
+    View,
+    Text,
+    ScrollView,
+    Image,
+    SafeAreaView,
+    TouchableOpacity
+} from 'react-native';
+import { Dropdown } from 'react-native-material-dropdown';
+
+
+class Catalogs extends React.Component {
+    
+    render() {
+
+        return (
+            <SafeAreaView>
+                <ScrollView >
+                    <View style={styles.container}>
+                        <View style={styles.catolog}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
+                                <View >
+                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
+                                    <Text style={{ fontSize: 17 }}>
+                                        Document 01
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "blue" }}>
+                                        Product
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "#626262" }}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
+                                <View >
+                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
+                                    <Text style={{ fontSize: 17 }}>
+                                        Document 01
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "blue" }}>
+                                        Product
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "#626262" }}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
+                                <View >
+                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
+                                    <Text style={{ fontSize: 17 }}>
+                                        Document 01
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "blue" }}>
+                                        Product
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "#626262" }}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.catolog}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
+                                <View >
+                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
+                                    <Text style={{ fontSize: 17 }}>
+                                        Document 01
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "blue" }}>
+                                        Product
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "#626262" }}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
+                                <View >
+                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
+                                    <Text style={{ fontSize: 17 }}>
+                                        Document 01
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "blue" }}>
+                                        Product
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "#626262" }}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
+                                <View >
+                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
+                                    <Text style={{ fontSize: 17 }}>
+                                        Document 01
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "blue" }}>
+                                        Product
+                                </Text>
+                                    <Text style={{ fontSize: 12, color: "#626262" }}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ScrollView >
+            </SafeAreaView>
+        );
+    }
+}
+
+const AuthStr = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImViZjRhZDFjYWFhZjNjMDhkNzlkZjVhMWM2OTExODUwODEzODY1NmIxZTc5ZTEyMzM1MTcyOTQ0NGU5NDQwZDI0YWZlMTg5NGQzZjJjMzUyIn0.eyJhdWQiOiI2IiwianRpIjoiZWJmNGFkMWNhYWFmM2MwOGQ3OWRmNWExYzY5MTE4NTA4MTM4NjU2YjFlNzllMTIzMzUxNzI5NDQ0ZTk0NDBkMjRhZmUxODk0ZDNmMmMzNTIiLCJpYXQiOjE1ODEwMzY4NTcsIm5iZiI6MTU4MTAzNjg1NywiZXhwIjoxNjEyNjU5MjU3LCJzdWIiOiIxMSIsInNjb3BlcyI6W119.Kvp6Io0vQ5MwMi6ohEHvNoVUrNEBVzTseZQwUdfm6UFWtIm6yuKs5as6uyOKx_1LrcG_-WBBCjiVTEcMtfSYAwsPa8ludXDz0iLxGpf2wJQQzzsVEU9DjModnCoFoYBxVqioHLa9CeGuE_tqEjAvlvT9XxyoU2fn7ndsDLm5wXPoPo2B8DfTwcJZ16l4ZgjOnVQzwW1Km83VWR6LEwZRlUVWUjEaD3WPrptPMLZYHO4mEj_LTP6W0vDAe_xiknjmWz38LPxgDhli1CiySS_Y8hNninWZkRGiUGPRVVEeuPKIeaf2oUT5b3sLybTZo-CFBF1wDNKEUPJ6CVSzaHOfF8aKyMY3NXFkK7sM3vuKgQompDMNjxXbvVEZifsGGEBepyMtGSXVVQaorGU5cVRV06LX2IDfMjLiWrC58BB7OmF6BCcjIaVy9uyM2phil6y8U2eGUZtsYEdCFw3AdL1IKy2ubPDGd-Red5BN_kx7YmqduuE7IByTHH0-Hjg6BoDe2mLPvRPGv7g4_SjQOGdAtYSCW1SpMJ20gFcJRye14PMWlyPkjMmWiBCGRsZeTLKmVXhSEMfbIDqPv5344qYeSPTOtAESeWEiqudkLxqN9gWt1O6P3JkLQ7CoSDGwtdlMTmpL4JjJxUpuWjBwzV145xc11Onl6MzeYzJU9EwVXWI';
+
+const styles = {
+    container: {
+        flex: 1,
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+    },
+    catolog: {
+        marginLeft: 20,
+        marginTop: 20,
+        width: '40%',
+        flexDirection: "column"
+    },
+    catologThumbnail: {
+        width: '100%',
+        height: 100,
+    }
+}
+
+
+export default Catalogs;
