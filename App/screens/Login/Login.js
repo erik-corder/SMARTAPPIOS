@@ -12,14 +12,19 @@ import {
   Text,
   Image,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
+import axios from 'axios';
 
 //components
 import Button from '.././../components/Button/Button';
 import appText from '../../src/utils/AppText';
 import AppColor from '../../src/utils/AppColor';
 import AppText from '../../src/utils/AppText';
+import NavBarDefault from '../../components/NavBarDefault/NavBarDefault';
+import UnderLineRed from '../../components/UnderLineRed/UnderLineRed';
 
 import APIKit from './LoginAPIkit';
 
@@ -35,6 +40,7 @@ class Login extends React.Component {
       isVisible: false,
       spinner: false,
       modelMsg: '',
+      result: ''
     };
   }
 
@@ -48,7 +54,7 @@ class Login extends React.Component {
       this.setState({
         emailError: true,
         passwordError: false,
-        error: AppText.name_error
+        error: AppText.email_error
       });
     } else if (this.state.password == '') {
       this.setState({
@@ -59,7 +65,7 @@ class Login extends React.Component {
     } else {
       this.requestToLogin().then((result) => {
         this.setAnimation(false);
-        this._storeData(result.data.login);
+        // this._storeData(result.data.login);
       })
         .catch((error) => {
           this.setAnimation(false);
@@ -83,7 +89,6 @@ class Login extends React.Component {
     });
   }
 
-
   // check valid email or not
   ValidateEmail = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -93,26 +98,24 @@ class Login extends React.Component {
   requestToLogin = async () => {
     this.setAnimation(true);
     const { email, password } = this.state;
-    const payload = { email, password };
-    console.log(payload);
+    var result;
 
-    const onSuccess = ({ data }) => {
-      // Set JSON Web Token on success
-      setClientToken(data.token);
-      this.setState({ isLoading: false, isAuthorized: true });
-    };
+    this.setState({ error: '', loading: true });
 
-    const onFailure = error => {
-        // this.props.navigation.goBack(null);
-        // this.props.navigation.navigate('LoginHome');
-      console.log(error && error.response);
-      // this.setState({errors: error.response.data, isLoading: false});
-    };
-
-    APIKit.post('http://apidev.rcpanz.com.au/api/customer/login', payload)
-      .then(onSuccess)
-      .catch(onFailure);
-
+    // NOTE Post to HTTPS only in production
+    axios.post('https://apidev.rcpanz.com.au/api/customer/login', {
+      email: /*'danushkajayarathna123789@gmail.com'*/email,
+      password: password
+    })
+      .then(response => {
+        this.setState({ result: response.data });
+        if (response.data.error == null) {
+          this._storeData(result.data.login);
+        }
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
     return result;
   }
 
@@ -133,54 +136,97 @@ class Login extends React.Component {
   };
 
   render() {
+    const { result } = this.state;
+
     return (
-      <View style={styles.container}>
-        <View style={styles.login_text_bg}>
-          {this.state.spinner == true
-            ? (
-              <ActivityIndicator
-                style={{ height: 200 }}
-                color={AppColor.rose}
-                size="large"
-              />
-            )
-            : <Text style={styles.login_text}>{AppText.login}</Text>}
+      <>
+        <NavBarDefault name={''} />
+        <View style={styles.container}>
+          <View style={styles.login_text_bg}>
+            {this.state.spinner == true
+              ? (
+                <ActivityIndicator
+                  style={{ height: 400 }}
+                  color={AppColor.rose}
+                  size="large"
+                />
+              )
+              : <Text style={styles.login_text}>{AppText.login}</Text>}
 
-        </View>
-        <Image
-          style={{ width: 200, height: 130 }}
-          source={require('../../assets/image/logo.png')}
-        />
-        <View style={styles.smartapp}>
-          <Text style={{ color: AppColor.white, fontWeight: 'bold', fontSize: 20 }}>SMART APP</Text>
-        </View>
-        <TextInput
-          style={styles.textStyle}
-          placeholder="  Email"
-          placeholderTextColor="#000"
-          onChangeText={(text) => this.setState({ email: text })}
-        />
-        <TextInput
-          style={styles.textStyle}
-          secureTextEntry
-          placeholder="  Password"
-          placeholderTextColor="#000"
-          onChangeText={(text) => this.setState({ password: text })}
-        />
-        <View style={styles.reg_btn}>
-          <Button
-            onPress={() => this.proceedLoginHome()}
-            name={"LOGIN"}
+          </View>
+          <Image
+            style={{ width: '55%', height: '22%', marginBottom: '10%', marginTop: '30%' }}
+            source={require('../../assets/image/logo.png')}
           />
-        </View>
-        <Text style={{ color: AppColor.red, marginTop: 10 }}>
-          Forget Password?
-        </Text>
-        <Text style={{ color: AppColor.gray, marginTop: 10 }}>
-          Don't have an account?
-        </Text>
-      </View>
+          <View style={styles.text_fild_set}>
+            <TextInput
+              style={styles.textStyle}
+              placeholder="  Email"
+              placeholderTextColor="#000"
+              onChangeText={(text) => this.setState({ email: text })}
+            />
+            {this.state.emailError == true
+              ? (
+                <View style={styles.lineBackground}>
+                  <UnderLineRed />
+                  <Text style={styles.errorText}>{this.state.error}</Text>
+                </View>
+              )
+              : (
+                <View style={styles.lineBackground}>
+                  {/* <UnderLine /> */}
+                </View>
+              )}
 
+            <TextInput
+              style={styles.textStyle}
+              secureTextEntry
+              placeholder="  Password"
+              placeholderTextColor="#000"
+              onChangeText={(text) => this.setState({ password: text })}
+            />
+            {this.state.passwordError == true
+              ? (
+                <View style={styles.lineBackground}>
+                  <UnderLineRed />
+                  <Text style={styles.errorText}>{this.state.error}</Text>
+                </View>
+              )
+              : (
+                <View style={styles.lineBackground}>
+                  {/* <UnderLine /> */}
+                </View>
+              )}
+          </View>
+          <>
+            {result.error != null
+              ? (
+                <View style={styles.line_error}>
+                  <Text style={styles.errorText}>this email not registered or invalid password (You mus enter 6 character for password)</Text>
+                </View>
+              )
+              : (
+                <View style={styles.line_error}>
+                  {/* <UnderLine /> */}
+                </View>
+              )}
+          </>
+          <View style={styles.log_btn}>
+            <Button
+              onPress={() => this.proceedLoginHome()}
+              name={"LOGIN"}
+            />
+          </View>
+          <View style={{ marginBottom: '30%' }}>
+            <Text style={{ color: AppColor.red, marginTop: 10 }}>
+              Forget Password?
+              </Text>
+            <Text style={{ color: AppColor.gray, marginTop: 10 }}>
+              Don't have an account?
+              </Text>
+          </View>
+        </View>
+      </>
     );
   }
 }
@@ -193,30 +239,28 @@ const styles = {
     backgroundColor: '#fff'
   },
   log_btn: {
-    marginTop: 10,
-  },
-  reg_btn: {
-    marginTop: 10
-  },
-  textContiner: {
-    width: 250,
+    marginTop: '10%',
+    width: '80%',
   },
   textStyle: {
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 0,
-    width: 250,
+    width: '100%',
     marginTop: 10,
     borderBottomWidth: 2,
   },
-  smartapp: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 200,
-    height: 30,
-    marginTop: 10,
-    marginBottom: 30,
-    backgroundColor: AppColor.balck
+  text_fild_set: {
+    width: '80%',
+    marginTop: '10%'
+  },
+  errorText: {
+    fontSize: 14,
+    color: '#FF0000',
+    width: '80%'
+  },
+  line_error: {
+    width: '90%'
   }
 }
 

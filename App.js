@@ -19,7 +19,7 @@ import AppNavigation from './App/navigation/AppNavigation';
 class App extends React.Component {
   render() {
     return (
-      <AppNavigation />
+        <AppNavigation />
     );
   }
 }

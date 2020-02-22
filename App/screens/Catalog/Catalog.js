@@ -19,12 +19,14 @@ import {
 import { createBottomTabNavigation, createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 
 //components
 import Button from '../../components/Button/Button';
 import appText from '../../src/utils/AppText';
 import appColor from '../../src/utils/AppColor';
 import { Thumbnail } from 'react-native-thumbnail-video';
+import NavBar from '../../components/NavBar/NavBar';
 
 //Screens
 import Home from '../Home/Home';
@@ -61,26 +63,55 @@ const DATA = [
 function Item({ title, url }) {
     return (
         <View>
-            <Thumbnail style={styles.thumbnail} url={url} />
-            <Text style={styles.title}>{title}</Text>
-            <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
-            <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>Description of the product goes here, of our planet</Text>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Player') }}>
+                <Image style={styles.thumbnail} source={require('../../assets/image/sampaleVideo.png')} />
+                <Text style={styles.title}>{title}</Text>
+                <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
+                <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>Description of the product goes here, of our planet</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 class Catalog extends React.Component {
+
+    state = {
+        search: '',
+    };
+
+    updateSearch = search => {
+        this.setState({ search });
+    };
+
     render() {
-        this.getVideoList();
+        const { search } = this.state;
         return (
-            <View style={styles.container}>
-                <FlatList
-                    data={DATA}
-                    renderItem={({ item }) => <Item title={item.title} url={item.url} />}
-                    keyExtractor={item => item.id}
-                    numColumns={2}
-                />
-            </View>
+            <>
+                <NavBar />
+                <View style={styles.container}>
+                    <SearchBar
+                        placeholder="Search"
+                        onChangeText={this.updateSearch}
+                        inputContainerStyle={{ backgroundColor: appColor.white, width: '90%', borderColor: appColor.white }}
+                        containerStyle={{ backgroundColor: appColor.white, borderWidth: 0, borderColor: appColor.balck, borderTopWidth: 0, height: 50 }}
+                        value={search}
+                    />
+                    {/* <FlatList
+                        data={DATA}
+                        renderItem={({ item }) => <Item title={item.title} url={item.url} />}
+                        keyExtractor={item => item.id}
+                        numColumns={2}
+                    /> */}
+                    <View>
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('Player') }}>
+                            <Image style={styles.thumbnail} source={require('../../assets/image/sampaleVideo.png')} />
+                            <Text style={styles.title}>Video</Text>
+                            <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
+                            <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>Description of the product goes here, of our planet</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </>
         );
     }
 }
@@ -100,13 +131,22 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         height: 100,
-        width: 100,
+        width: 150,
         marginHorizontal: 30,
-        marginVertical: 10
+        marginVertical: 10,
+        marginTop: '5%'
     },
     title: {
         marginHorizontal: 30,
         fontSize: 15,
+    },
+    textInput: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 0,
+        width: '90%',
+        marginTop: '2%',
+        borderBottomWidth: 2,
     },
 }
 

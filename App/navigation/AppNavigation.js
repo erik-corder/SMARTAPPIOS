@@ -23,11 +23,12 @@ import RegistrationSecond from '../screens/Registration/RegistrationsSecond/Regi
 import RCPmanual from '../screens/RCPmanual/RCPmanual';
 import Catalogs from '../screens/Catalogs/Catalogs';
 import SingleCatalog from '../screens/SingleCatalog/SingleCatalog';
+import Player from '../screens/VideoPlayer/Player/Player';
 
 import Color from '../src/utils/AppColor';
 
 const DrawerContent = (data) => (
-  <SafeAreaView style={{ flex: 1 }}>
+  <SafeAreaView style={{ flex: 1}}>
       <View style={styles.header}>
       </View>
   </SafeAreaView>
@@ -48,6 +49,7 @@ const AppNavigation = createStackNavigator(
     RCPmanual: {screen : RCPmanual},
     Catalogs: {screen: Catalogs},
     SingleCatalog: {screen: SingleCatalog},
+    Player: {screen: Player}
   }, {
     drawerWidth: 250,
     navigationOptions: null,

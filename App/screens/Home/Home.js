@@ -24,7 +24,7 @@ import axios from "axios";
 class Home extends React.Component {
 
   state = {
-    onCall : true
+    onCall: true
   }
 
   proceedLogin = () => {
@@ -42,26 +42,25 @@ class Home extends React.Component {
     return (
       <View style={styles.container}>
         <Image
-          style={{ width: 200, height: 130 }}
+          style={{ width: '55%', height: '22%', marginBottom: '10%'}}
           source={require('../../assets/image/logo.png')}
         />
-        <View style={styles.smartapp}>
-          <Text style={{color:appColor.white, fontWeight: 'bold', fontSize: 20}}>SMART APP</Text>
-        </View>
         <View style={styles.textContiner}>
-          <Text style = {{color : appColor.gray, textAlign: 'center',}}>{appText.homeText}</Text>
+          <Text style={{ color: appColor.gray, textAlign: 'center', }}>{appText.homeText}</Text>
         </View>
-        <View style={styles.log_btn}>
-          <Button
-            onPress={() => this.proceedLogin()}
-            name={"LOGIN"}
-          />
-        </View>
-        <View style={styles.reg_btn}>
-          <Button
-            onPress={() => this.proceedReg()}
-            name={"SIGNUP"}
-          />
+        <View style={styles.btn_set}>
+          <View style={styles.log_btn}>
+            <Button
+              onPress={() => this.proceedLogin()}
+              name={"LOGIN"}
+            />
+          </View>
+          <View style={styles.reg_btn}>
+            <Button
+              onPress={() => this.proceedReg()}
+              name={"SIGNUP"}
+            />
+          </View>
         </View>
       </View>
     );
@@ -76,22 +75,17 @@ const styles = {
     backgroundColor: '#fff'
   },
   log_btn: {
-    marginTop: 10,
+    marginTop: '10%',
   },
   reg_btn: {
-    marginTop: 10
+    marginTop: '5%'
+  },
+  btn_set: {
+    width: '80%'
   },
   textContiner: {
-    width : 250,
-  },
-  smartapp: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 200,
-    height: 30,
-    marginTop: 10,
-    marginBottom: 30,
-    backgroundColor: appColor.balck
+    width: '70%',
+    height: '20%'
   }
 }
 

@@ -40,14 +40,14 @@ class Button extends React.Component {
 const styles = {
     background: {
         backgroundColor: AppColor.red,
-        height: 45,
+        height: 50,
         borderRadius: 10,
-        width: 250,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        fontSize: 16,
+        fontSize: 20,
         color: AppColor.white,
         textAlign: 'center',
         // fontFamily: AppFonts.semiBold,

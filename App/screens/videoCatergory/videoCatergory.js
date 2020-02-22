@@ -11,8 +11,9 @@ import {
     View,
     Text,
     Image,
-    TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView,
+    SafeAreaView,
 } from 'react-native';
 
 import { createBottomTabNavigation, createAppContainer } from 'react-navigation';
@@ -36,77 +37,43 @@ class VideoCatergory extends React.Component {
 
     render() {
         return (
-            <>
+            <View style={{backgroundColor:appColor.white}}>
                 <NavBar />
-                <View style={styles.container}>
-                    <TouchableOpacity onPress={() =>  this.props.navigation.navigate('videoList')}>
-                        <Image
-                            style={{ width: 250, height: 150 }}
-                            source={require('../../assets/image/TrainingVideo.png')}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('videoList') }}>
-                        <Image
-                            style={{ width: 250, height: 154 }}
-                            source={require('../../assets/image/HowToVideo.png')}
-                        />
-                    </TouchableOpacity>
-                    <View style={styles.reg_btn}>
-                    </View>
-                </View>
-            </>
+                <SafeAreaView>
+                    <ScrollView >
+                        <View style={styles.container}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Catalog') }}>
+                                <View style={{ alignItems: 'center', width: '90%', height: '60%', borderColor: appColor.balck, borderWidth: 5, borderRadius: 10, paddingTop: '10%', paddingRight: '25%', paddingLeft: '25%', marginTop: '20%' }}>
+                                    <Image
+                                        style={{ width: 120, height: 120, }}
+                                        source={require('../../assets/image/how-to.png')}
+                                    />
+                                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Rcp Videos</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('videoCatergory') }}>
+                                <View style={{ alignItems: 'center', width: '90%', height: '60%', borderColor: appColor.balck, borderWidth: 5, borderRadius: 10, paddingTop: '10%', paddingRight: '25%', paddingLeft: '25%', marginTop: '-10%', marginBottom: '28%' }}>
+                                    <Image
+                                        style={{ width: 120, height: 120, }}
+                                        source={require('../../assets/image/training.png')}
+                                    />
+                                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Rcp Manuals</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView >
+                </SafeAreaView>
+            </View>
         );
     }
 }
-
-// const TabNavigator = createMaterialBottomTabNavigator({
-//     Home: {screen:Home,
-//         navigationOptions: {
-//             tabBarLabel: 'Home',
-//             activeColor: '#ff0000',
-//             inactiveColor: '#000000',
-//             barStyle: {backgroundColor:'#67baf6'},
-//             tabBarIcon:()=>(
-//                 <View>
-//                     <Icon name= {'home'} size = {25} style={{color:'#ff0000'}}/>
-//                 </View>
-//             )
-//         }
-//     },
-//     Login: {screen:Login,
-//         navigationOptions: {
-//             tabBarLabel: 'Login',
-//             activeColor: '#ff0000',
-//             inactiveColor: '#000000',
-//             barStyle: {backgroundColor:'#67baf6'},
-//             tabBarIcon:()=>(
-//                 <View>
-//                     <Icon name= {'Person'} size = {25} style={{color:'#ff0000'}}/>
-//                 </View>
-//             )
-//         }
-//     },
-//     // Cart: {screen:Cart,
-//     //     navigationOptions: {
-//     //         tabBarLabel: 'Cart',
-//     //         activeColor: '#ff0000',
-//     //         inactiveColor: '#000000',
-//     //         barStyle: {backgroundColor:'#67baf6'},
-//     //         tabBarIcon:()=>(
-//     //             <View>
-//     //                 <Icon name= {'add-shopping-cart'} size = {25} style={{color:'#ff0000'}}/>
-//     //             </View>
-//     //         )
-//     //     }
-//     // }
-// })
 
 const styles = {
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff'
+        marginTop: '20%'
     },
     log_btn: {
         marginTop: 10,
