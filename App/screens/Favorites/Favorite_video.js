@@ -33,8 +33,9 @@ import TabBar from '../../components/TabBar/TabBar';
 //Screens
 import Home from '../Home/Home';
 import Login from '../Login/Login';
+import NavBarDefault from '../../components/NavBarDefault/NavBarDefault';
 
-class Catalog extends React.Component {
+class Favorite_video extends React.Component {
 
     state = {
         search: '',
@@ -48,7 +49,7 @@ class Catalog extends React.Component {
         const { search } = this.state;
         return (
             <View style={styles.container}>
-                <NavBar />
+                <NavBarDefault name={'Favorite Video'} />
                 <ScrollView>
                     <View style={styles.body}>
                         <SearchBar
@@ -58,7 +59,7 @@ class Catalog extends React.Component {
                             containerStyle={{ backgroundColor: appColor.white, borderWidth: 0, borderColor: appColor.balck, borderTopWidth: 0, height: 50 }}
                             value={search}
                         />
-                        <View style={{flex: 1,flexDirection: 'column',justifyContent: 'space-between'}}>
+                        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
                             <View>
                                 <TouchableOpacity onPress={() => { this.props.navigation.navigate('Player') }}>
                                     <Image style={styles.thumbnail} source={require('../../assets/image/sampaleVideo.png')} />
@@ -86,7 +87,24 @@ class Catalog extends React.Component {
                         </View>
                     </View>
                 </ScrollView>
-                <TabBar />
+                <View style={styles.tabBar}>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('LoginHome') }}>
+                        <Image source={require('../../assets/image/home_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/star_n.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 12 }}>Favorites</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Profile') }}>
+                        <Image source={require('../../assets/image/profile_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Profile</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -121,8 +139,19 @@ const styles = {
         marginTop: '2%',
         borderBottomWidth: 2,
     },
-
+    tabBar: {
+        height: 70,
+        width: '100%',
+        elevation: 3,
+        flexDirection: 'row',
+        backgroundColor: appColor.yellow,
+        justifyContent: 'space-around'
+    },
+    tabItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 }
 
-export default Catalog;
+export default Favorite_video;
 

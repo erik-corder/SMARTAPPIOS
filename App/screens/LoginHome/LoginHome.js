@@ -14,12 +14,15 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
-    SafeAreaView,
+    Dimensions,
 } from 'react-native';
 
 import { createBottomTabNavigation, createAppContainer, DrawerNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { Icon } from 'react-native-elements';
+
+const screenWidth = Math.round(Dimensions.get('window').width);
+const screenHeight = Math.round(Dimensions.get('window').height);
 
 
 
@@ -28,12 +31,11 @@ import Button from '.././../components/Button/Button';
 import appText from '../../src/utils/AppText';
 import appColor from '../../src/utils/AppColor';
 import NavBar from '../../components/NavBar/NavBar';
-// import { forModalPresentationIOS } from 'react-navigation-stack/lib/typescript/src/vendor/TransitionConfigs/CardStyleInterpolators';
+import TabBar from '../../components/TabBar/TabBar';
 
 //Screens
 import Home from '../Home/Home';
 import Login from '../Login/Login';
-import Favorites from '../Favorites/Favorites';
 import Catalog from '../Catalog/Catalog';
 import Profile from '../Profile/Profile';
 
@@ -42,107 +44,81 @@ class LoginHome extends React.Component {
 
     render() {
         return (
-            <View style={{ backgroundColor: appColor.white }}>
-                <View>
-                    <NavBar />
+            <View style={styles.container}>
+                <NavBar />
+                <ScrollView>
+                    <View style={styles.body}>
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('videoCatergory') }}>
+                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.25, paddingVertical: screenHeight * 0.05, marginVertical: '5%', alignItems: 'center' }}>
+                                <Image
+                                    style={{ width: 120, height: 120, }}
+                                    source={require('../../assets/image/video.png')}
+                                />
+                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>Rcp Videos</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('RCPmanual') }}>
+                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.25, paddingVertical: screenHeight * 0.05, marginVertical: '2.5%', alignItems: 'center' }}>
+                                <Image
+                                    style={{ width: 120, height: 120, }}
+                                    source={require('../../assets/image/Docs.png')}
+                                />
+                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>Rcp Manuals</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <View style={styles.tabBar}>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/home_n.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Favorite_video') }}>
+                        <Image source={require('../../assets/image/star_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 12 }}>Favorites</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/profile_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Profile</Text>
+                    </TouchableOpacity>
                 </View>
-                <SafeAreaView>
-                    <ScrollView >
-                        <View style={styles.container}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('videoCatergory') }}>
-                                <View style={{ alignItems: 'center', width: '90%', height: '60%', borderColor: appColor.balck, borderWidth: 5, borderRadius: 10, paddingTop: '10%', paddingRight: '25%', paddingLeft: '25%', marginTop: '20%' }}>
-                                    <Image
-                                        style={{ width: 120, height: 120, }}
-                                        source={require('../../assets/image/video.png')}
-                                    />
-                                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Rcp Videos</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('videoCatergory') }}>
-                                <View style={{ alignItems: 'center', width: '90%', height: '60%', borderColor: appColor.balck, borderWidth: 5, borderRadius: 10, paddingTop: '10%', paddingRight: '25%', paddingLeft: '25%', marginTop: '-10%', marginBottom: '28%' }}>
-                                    <Image
-                                        style={{ width: 120, height: 120, }}
-                                        source={require('../../assets/image/Docs.png')}
-                                    />
-                                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Rcp Manuals</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView >
-                </SafeAreaView>
             </View>
         );
     }
 }
 
-const TabNavigator = createMaterialBottomTabNavigator({
-    Home: {
-        screen: LoginHome,
-        navigationOptions: {
-            tabBarLabel: 'Home',
-            activeColor: '#ff0000',
-            inactiveColor: appColor.red,
-            barStyle: { backgroundColor: appColor.yellow },
-            tabBarIcon: () => (
-                <View>
-                    <Icon name={'home'} size={25} style={{ color: '#ff0000' }} />
-                </View>
-            )
-        }
-    },
-    Favorites: {
-        screen: Favorites,
-        navigationOptions: {
-            tabBarLabel: 'Favorites',
-            activeColor: '#ff0000',
-            inactiveColor: '#000000',
-            barStyle: { backgroundColor: appColor.yellow },
-            tabBarIcon: () => (
-                <View>
-                    <Icon name={'favorite'} size={25} style={{ color: '#ff0000' }} />
-                </View>
-            )
-        }
-    },
-    Catalog: {
-        screen: Catalog,
-        navigationOptions: {
-            tabBarLabel: 'Ctalogaues',
-            activeColor: '#ff0000',
-            inactiveColor: '#000000',
-            barStyle: { backgroundColor: appColor.yellow },
-            tabBarIcon: () => (
-                <View>
-                    <Icon name={'book'} size={25} style={{ color: '#ff0000' }} />
-                </View>
-            )
-        }
-    },
-    Profile: {
-        screen: Profile,
-        navigationOptions: {
-            tabBarLabel: 'Profile',
-            activeColor: '#ff0000',
-            inactiveColor: '#000000',
-            barStyle: { backgroundColor: appColor.yellow },
-            tabBarIcon: () => (
-                <View>
-                    <Icon name={'verified-user'} size={25} style={{ color: '#ff0000' }} />
-                </View>
-            )
-        }
-    },
-});
+
 
 const styles = {
     container: {
         flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // backgroundColor: '#fff',
+        // marginTop: '20%'
+    },
+    body: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        marginTop: '20%'
+    },
+    tabBar: {
+        height: 70,
+        width: '100%',
+        elevation: 3,
+        flexDirection: 'row',
+        backgroundColor: appColor.yellow,
+        justifyContent: 'space-around'
+    },
+    tabItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }
 
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(LoginHome);

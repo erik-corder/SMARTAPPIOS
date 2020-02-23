@@ -15,7 +15,6 @@ import Login from '../screens/Login/Login';
 import LoginHome from '../screens/LoginHome/LoginHome';
 import videoCatergory from '../screens/videoCatergory/videoCatergory';
 import videoList from '../screens/videoList/videoList';
-import Favorites from '../screens/Favorites/Favorites';
 import Catalog from '../screens/Catalog/Catalog';
 import Profile from '../screens/Profile/Profile';
 import RegistrationFirst from '../screens/Registration/RegistrationFirst/RegistrationFirst';
@@ -24,6 +23,8 @@ import RCPmanual from '../screens/RCPmanual/RCPmanual';
 import Catalogs from '../screens/Catalogs/Catalogs';
 import SingleCatalog from '../screens/SingleCatalog/SingleCatalog';
 import Player from '../screens/VideoPlayer/Player/Player';
+import Favorite_video from '../screens/Favorites/Favorite_video';
+import Favorite_catalog from '../screens/Favorites/Favorite_catalog';
 
 import Color from '../src/utils/AppColor';
 
@@ -41,7 +42,6 @@ const AppNavigation = createStackNavigator(
     LoginHome: { screen: LoginHome },
     videoCatergory: { screen: videoCatergory },
     videoList: { screen: videoList },
-    Favorites: { screen: Favorites },
     Catalog: { screen: Catalog },
     Profile: { screen: Profile },
     RegistrationFirst: { screen: RegistrationFirst },
@@ -49,7 +49,9 @@ const AppNavigation = createStackNavigator(
     RCPmanual: {screen : RCPmanual},
     Catalogs: {screen: Catalogs},
     SingleCatalog: {screen: SingleCatalog},
-    Player: {screen: Player}
+    Player: {screen: Player},
+    Favorite_video: {screen: Favorite_video},
+    Favorite_catalog : {screen: Favorite_catalog}
   }, {
     drawerWidth: 250,
     navigationOptions: null,

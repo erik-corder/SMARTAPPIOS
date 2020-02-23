@@ -21,11 +21,8 @@ import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 const sampleVideo = require('../../../assets/sample.mp4')
 
 //components
-// import Button from '../../components/Button/Button';
-// import appText from '../../src/utils/AppText';
-// import appColor from '../../src/utils/AppColor';
-// import appLogo from '../../src/utils/Assets';
-// import axios from "axios";
+import NavBar from '../../../components/NavBarDefault/NavBarDefault';
+import TabBar from '../../../components/TabBar/TabBar';
 
 
 class Player extends React.Component {
@@ -106,8 +103,9 @@ class Player extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{width: '100%', height: '40%', zIndex:1,position:'absolute', top: 0}}>
-          <Video 
+        <NavBar />
+        <View style={styles.body}>
+          <Video
             onEnd={this.onEnd}
             onLoad={this.onLoad}
             onLoadStart={this.onLoadStart}
@@ -134,6 +132,7 @@ class Player extends React.Component {
             toolbar={this.renderToolbar()}
           />
         </View>
+        <TabBar />
       </View>
     );
   }
@@ -142,16 +141,6 @@ class Player extends React.Component {
 const styles = {
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  backgroundVideo: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
   },
   toolbar: {
     marginTop: 30,
@@ -167,6 +156,10 @@ const styles = {
     right: 0,
     backgroundColor: 'black',
   },
+  body: {
+    flex: 1,
+    height: '50%'
+  }
 }
 
 export default Player;

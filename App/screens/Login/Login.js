@@ -104,13 +104,16 @@ class Login extends React.Component {
 
     // NOTE Post to HTTPS only in production
     axios.post('https://apidev.rcpanz.com.au/api/customer/login', {
-      email: /*'danushkajayarathna123789@gmail.com'*/email,
-      password: password
+      email: 'danushkajayarathna123789@gmail.com',
+      password: '123456'
     })
       .then(response => {
         this.setState({ result: response.data });
         if (response.data.error == null) {
-          this._storeData(result.data.login);
+          console.log(response.data);
+          // this._storeData(result.data.login);
+          this.props.navigation.goBack(null);
+          this.props.navigation.navigate('LoginHome');
         }
       })
       .catch(function (error) {
@@ -137,95 +140,95 @@ class Login extends React.Component {
 
   render() {
     const { result } = this.state;
-
+    console.log(result)
     return (
       <>
-        <NavBarDefault name={''} />
-        <View style={styles.container}>
-          <View style={styles.login_text_bg}>
-            {this.state.spinner == true
-              ? (
-                <ActivityIndicator
-                  style={{ height: 400 }}
-                  color={AppColor.rose}
-                  size="large"
-                />
-              )
-              : <Text style={styles.login_text}>{AppText.login}</Text>}
+        <NavBarDefault name={'Login'} />
+          <View style={styles.container}>
+            <View style={styles.login_text_bg}>
+              {this.state.spinner == true
+                ? (
+                  <ActivityIndicator
+                    style={{ height: 200 }}
+                    color={AppColor.rose}
+                    size="large"
+                  />
+                )
+                : <Text style={styles.login_text}></Text>}
 
-          </View>
-          <Image
-            style={{ width: '55%', height: '22%', marginBottom: '10%', marginTop: '30%' }}
-            source={require('../../assets/image/logo.png')}
-          />
-          <View style={styles.text_fild_set}>
-            <TextInput
-              style={styles.textStyle}
-              placeholder="  Email"
-              placeholderTextColor="#000"
-              onChangeText={(text) => this.setState({ email: text })}
+            </View>
+            <Image
+              style={{ width: '58%', height: '22%', marginTop: '20%' }}
+              source={require('../../assets/image/logo.png')}
             />
-            {this.state.emailError == true
-              ? (
-                <View style={styles.lineBackground}>
-                  <UnderLineRed />
-                  <Text style={styles.errorText}>{this.state.error}</Text>
-                </View>
-              )
-              : (
-                <View style={styles.lineBackground}>
-                  {/* <UnderLine /> */}
-                </View>
-              )}
+            <View style={styles.text_fild_set}>
+              <TextInput
+                style={styles.textStyle}
+                placeholder="  Email"
+                placeholderTextColor="#000"
+                onChangeText={(text) => this.setState({ email: text })}
+              />
+              {this.state.emailError == true
+                ? (
+                  <View style={styles.lineBackground}>
+                    <UnderLineRed />
+                    <Text style={styles.errorText}>{this.state.error}</Text>
+                  </View>
+                )
+                : (
+                  <View style={styles.lineBackground}>
+                    {/* <UnderLine /> */}
+                  </View>
+                )}
 
-            <TextInput
-              style={styles.textStyle}
-              secureTextEntry
-              placeholder="  Password"
-              placeholderTextColor="#000"
-              onChangeText={(text) => this.setState({ password: text })}
-            />
-            {this.state.passwordError == true
-              ? (
-                <View style={styles.lineBackground}>
-                  <UnderLineRed />
-                  <Text style={styles.errorText}>{this.state.error}</Text>
-                </View>
-              )
-              : (
-                <View style={styles.lineBackground}>
-                  {/* <UnderLine /> */}
-                </View>
-              )}
-          </View>
-          <>
-            {result.error != null
-              ? (
-                <View style={styles.line_error}>
-                  <Text style={styles.errorText}>this email not registered or invalid password (You mus enter 6 character for password)</Text>
-                </View>
-              )
-              : (
-                <View style={styles.line_error}>
-                  {/* <UnderLine /> */}
-                </View>
-              )}
-          </>
-          <View style={styles.log_btn}>
-            <Button
-              onPress={() => this.proceedLoginHome()}
-              name={"LOGIN"}
-            />
-          </View>
-          <View style={{ marginBottom: '30%' }}>
-            <Text style={{ color: AppColor.red, marginTop: 10 }}>
-              Forget Password?
+              <TextInput
+                style={styles.textStyle}
+                secureTextEntry
+                placeholder="  Password"
+                placeholderTextColor="#000"
+                onChangeText={(text) => this.setState({ password: text })}
+              />
+              {this.state.passwordError == true
+                ? (
+                  <View style={styles.lineBackground}>
+                    <UnderLineRed />
+                    <Text style={styles.errorText}>{this.state.error}</Text>
+                  </View>
+                )
+                : (
+                  <View style={styles.lineBackground}>
+                    {/* <UnderLine /> */}
+                  </View>
+                )}
+            </View>
+            <>
+              {result.error != null
+                ? (
+                  <View style={styles.line_error}>
+                    <Text style={styles.errorText}>this email not registered or invalid password (You mus enter 6 character for password)</Text>
+                  </View>
+                )
+                : (
+                  <View style={styles.line_error}>
+                    {/* <UnderLine /> */}
+                  </View>
+                )}
+            </>
+            <View style={styles.log_btn}>
+              <Button
+                onPress={() => this.proceedLoginHome()}
+                name={"LOGIN"}
+              />
+            </View>
+            <View style={{ marginBottom: '40%' }}>
+              <Text style={{ color: AppColor.red, marginTop: 10 }}>
+                Forget Password?
               </Text>
-            <Text style={{ color: AppColor.gray, marginTop: 10 }}>
-              Don't have an account?
+              <Text style={{ color: AppColor.gray, marginTop: 10 }}>
+                Don't have an account?
               </Text>
+            </View>
           </View>
-        </View>
       </>
     );
   }

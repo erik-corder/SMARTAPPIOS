@@ -15,7 +15,7 @@ import NavBarDefault from '../../components/NavBarDefault/NavBarDefault';
 import TabBar from '../../components/TabBar/TabBar';
 import appColor from '../../src/utils/AppColor';
 
-class Catalogs extends React.Component {
+class Favorite_catalog extends React.Component {
 
     state = {
         search: '',
@@ -30,7 +30,7 @@ class Catalogs extends React.Component {
         const { search } = this.state;
         return (
             <>
-                <NavBarDefault name={'How to Manual'} />
+                <NavBarDefault name={'Favorite Manual'} />
                 <SearchBar
                     placeholder="Search"
                     onChangeText={this.updateSearch}
@@ -130,7 +130,24 @@ class Catalogs extends React.Component {
                         </View>
                     </View>
                 </ScrollView >
-                <TabBar />
+                <View style={styles.tabBar}>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('LoginHome') }}>
+                        <Image source={require('../../assets/image/home_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/star_n.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 12 }}>Favorites</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Profile') }}>
+                        <Image source={require('../../assets/image/profile_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Profile</Text>
+                    </TouchableOpacity>
+                </View>
             </>
         );
     }
@@ -153,8 +170,20 @@ const styles = {
     catologThumbnail: {
         width: '100%',
         height: 100,
+    },
+    tabBar: {
+        height: 70,
+        width: '100%',
+        elevation: 3,
+        flexDirection: 'row',
+        backgroundColor: appColor.yellow,
+        justifyContent: 'space-around'
+    },
+    tabItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }
 
 
-export default Catalogs;
+export default Favorite_catalog;

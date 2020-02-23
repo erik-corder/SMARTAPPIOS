@@ -1,52 +1,72 @@
-import React, { Component } from 'react';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
+import React from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  SafeAreaView
+    View,
+    Text,
+    StyleSheet,
+    Dimensions
 } from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
+import Pdf from 'react-native-pdf';
+
+
+//components
+// import Button from '../../components/Button/Button';
+// import appText from '../../src/utils/AppText';
+// import appColor from '../../src/utils/AppColor';
+// import appLogo from '../../src/utils/Assets';
+// import axios from "axios";
 
 
 class SingleCatalog extends React.Component {
-  render() {
 
-    let data = [{
-      value: 'Software',
-    }, {
-      value: 'Teaching',
-    }, {
-      value: 'Soldure',
-    }];
 
-    return (
-      <SafeAreaView>
-        <ScrollView >
-          <View >
-            <Image source={require('../../assets/image/doc.jpg')} style={{ width: '100%' }}></Image>
-            <View style={{ paddingLeft: 10 }}>
-              <Text style={{ textAlign: 'left', color: "blue" }}>Product</Text>
-              <Text style={{ textAlign: 'left', fontSize: 20 }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </Text>
-              <View style={{ marginTop: 10 }}>
-                <Text style={{ textAlign: 'left', fontSize: 25 }}>Document Sub Heading</Text>
-                <Text style={{ textAlign: 'left', fontSize: 15 }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </Text>
-              </View>
+    render() {
+        const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
+
+        return (
+            <View style={styles.container}>
+                <Text>PDF Viwer</Text>
+                <Pdf
+                    source={source}
+                    onLoadComplete={(numberOfPages,filePath)=>{
+                        console.log(`number of pages: ${numberOfPages}`);
+                    }}
+                    onPageChanged={(page,numberOfPages)=>{
+                        console.log(`current page: ${page}`);
+                    }}
+                    onError={(error)=>{
+                        console.log(error);
+                    }}
+                    onPressLink={(uri)=>{
+                        console.log(`Link presse: ${uri}`)
+                    }}
+                    style={styles.pdf}
+                    // enableAntialiasing= {true}
+                    />
             </View>
-          </View>
-        </ScrollView >
-      </SafeAreaView>
-    );
-  }
+        );
+    }
 }
 
 const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff'
+    },
+    pdf: {
+        flex: 1,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    }
 }
-
 
 export default SingleCatalog;

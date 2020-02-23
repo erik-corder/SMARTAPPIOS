@@ -12,8 +12,13 @@ import {
     Text,
     Image,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView,
+    Dimensions
 } from 'react-native';
+
+const screenWidth = Math.round(Dimensions.get('window').width);
+const screenHeight = Math.round(Dimensions.get('window').height);
 
 import { createBottomTabNavigation, createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -23,6 +28,8 @@ import { Icon } from 'react-native-elements';
 import Button from '.././../components/Button/Button';
 import appText from '../../src/utils/AppText';
 import appColor from '../../src/utils/AppColor';
+import NavBar from '../../components/NavBar/NavBar';
+import TabBar from '../../components/TabBar/TabBar';
 // import { forModalPresentationIOS } from 'react-navigation-stack/lib/typescript/src/vendor/TransitionConfigs/CardStyleInterpolators';
 
 //Screens
@@ -35,23 +42,46 @@ class RCPManual extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {/* <Image
-                    style={{ width: 50, height: 50, marginBottom: 20 }}
-                    source={require('../../assets/image/logo.png')}
-                /> */}
-                <TouchableOpacity onPress={() => { this.props.navigation.navigate('Catalogs') }}>
-                    <Image
-                        style={{ width: 250, height: 150 }}
-                        source={require('../../assets/image/trainManual.png')}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { this.props.navigation.navigate('Catalogs') }}>
-                    <Image
-                        style={{ width: 250, height: 154 }}
-                        source={require('../../assets/image/howtomanuals.png')}
-                    />
-                </TouchableOpacity>
-                <View style={styles.reg_btn}>
+                <NavBar />
+                <ScrollView>
+                    <View style={styles.body}>
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('Catalogs') }}>
+                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.2, paddingVertical: screenHeight * 0.05, marginVertical: '5%', alignItems: 'center' }}>
+                                <Image
+                                    style={{ width: 120, height: 120, }}
+                                    source={require('../../assets/image/training.png')}
+                                />
+                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>Training Manuals</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('Catalog') }}>
+                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.22, paddingVertical: screenHeight * 0.05, marginVertical: '5%', alignItems: 'center' }}>
+                                <Image
+                                    style={{ width: 120, height: 120, }}
+                                    source={require('../../assets/image/how-to.png')}
+                                />
+                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>How To Manuals</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <View style={styles.tabBar}>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/home_n.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Favorite_catalog') }}>
+                        <Image source={require('../../assets/image/star_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 12 }}>Favorites</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}>
+                        <Image source={require('../../assets/image/profile_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Profile</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -62,25 +92,23 @@ class RCPManual extends React.Component {
 const styles = {
     container: {
         flex: 1,
+    },
+    body: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff'
     },
-    log_btn: {
-        marginTop: 10,
+    tabBar: {
+        height: 70,
+        width: '100%',
+        elevation: 3,
+        flexDirection: 'row',
+        backgroundColor: appColor.yellow,
+        justifyContent: 'space-around'
     },
-    reg_btn: {
-        marginTop: 10
-    },
-    textContiner: {
-        width: 250,
-    },
-    textStyle: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        width: 250,
-        marginTop: 10
+    tabItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }
 
