@@ -114,7 +114,7 @@ class Player extends React.Component {
             ref={videoPlayer => (this.videoPlayer = videoPlayer)}
             resizeMode={this.state.screenType}
             onFullScreen={this.state.isFullScreen}
-            source={require('../../../assets/sample2.mp4')}
+            source={require('../../../assets/sample.mp4')}
             style={styles.mediaPlayer}
             volume={10}
           />
