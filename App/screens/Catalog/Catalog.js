@@ -36,6 +36,27 @@ import Login from '../Login/Login';
 
 class Catalog extends React.Component {
 
+    constructor(){
+        super();
+    }
+
+    componentDidMount(){
+        this._retrieveName();
+    }
+
+    _retrieveName = async () => {
+        try {
+          const jwtToken = await AsyncStorage.getItem('jwtToken');
+          
+          this.setState({
+            token: jwtToken
+          });
+        } catch (error) {
+          // Error retrieving data
+        }
+        console.log(this.state.token);
+      };
+
     state = {
         search: '',
     };

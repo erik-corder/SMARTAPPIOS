@@ -13,8 +13,9 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  TouchableOpacity,
   ScrollView,
-  SafeAreaView,
+  AsyncStorage
 } from 'react-native';
 import axios from 'axios';
 
@@ -46,6 +47,11 @@ class Login extends React.Component {
 
   componentDidMount = () => { }
   componentWillUnmount = () => { }
+
+  proceedBack(){
+    this.props.navigation.goBack(null);
+    this.props.navigation.navigate('Home');
+  }
 
   proceedLoginHome = () => {
     // this.props.navigation.goBack(null);
@@ -104,14 +110,13 @@ class Login extends React.Component {
 
     // NOTE Post to HTTPS only in production
     axios.post('https://apidev.rcpanz.com.au/api/customer/login', {
-      email: 'danushkajayarathna123789@gmail.com',
-      password: '123456'
+      email: email,
+      password: password
     })
       .then(response => {
         this.setState({ result: response.data });
-        if (response.data.error == null) {
-          console.log(response.data);
-          // this._storeData(result.data.login);
+        this._storeData(this.state.result); 
+        if (response.data.error == null) {     
           this.props.navigation.goBack(null);
           this.props.navigation.navigate('LoginHome');
         }
@@ -124,26 +129,25 @@ class Login extends React.Component {
 
   // set local storage to data
   _storeData = async (obj) => {
+    console.log( obj.result.access_token);
     try {
       // save login data and token local storage
       await AsyncStorage.setItem('status', 'login');
-      await AsyncStorage.setItem('jwtToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImViZjRhZDFjYWFhZjNjMDhkNzlkZjVhMWM2OTExODUwODEzODY1NmIxZTc5ZTEyMzM1MTcyOTQ0NGU5NDQwZDI0YWZlMTg5NGQzZjJjMzUyIn0.eyJhdWQiOiI2IiwianRpIjoiZWJmNGFkMWNhYWFmM2MwOGQ3OWRmNWExYzY5MTE4NTA4MTM4NjU2YjFlNzllMTIzMzUxNzI5NDQ0ZTk0NDBkMjRhZmUxODk0ZDNmMmMzNTIiLCJpYXQiOjE1ODEwMzY4NTcsIm5iZiI6MTU4MTAzNjg1NywiZXhwIjoxNjEyNjU5MjU3LCJzdWIiOiIxMSIsInNjb3BlcyI6W119.Kvp6Io0vQ5MwMi6ohEHvNoVUrNEBVzTseZQwUdfm6UFWtIm6yuKs5as6uyOKx_1LrcG_-WBBCjiVTEcMtfSYAwsPa8ludXDz0iLxGpf2wJQQzzsVEU9DjModnCoFoYBxVqioHLa9CeGuE_tqEjAvlvT9XxyoU2fn7ndsDLm5wXPoPo2B8DfTwcJZ16l4ZgjOnVQzwW1Km83VWR6LEwZRlUVWUjEaD3WPrptPMLZYHO4mEj_LTP6W0vDAe_xiknjmWz38LPxgDhli1CiySS_Y8hNninWZkRGiUGPRVVEeuPKIeaf2oUT5b3sLybTZo-CFBF1wDNKEUPJ6CVSzaHOfF8aKyMY3NXFkK7sM3vuKgQompDMNjxXbvVEZifsGGEBepyMtGSXVVQaorGU5cVRV06LX2IDfMjLiWrC58BB7OmF6BCcjIaVy9uyM2phil6y8U2eGUZtsYEdCFw3AdL1IKy2ubPDGd-Red5BN_kx7YmqduuE7IByTHH0-Hjg6BoDe2mLPvRPGv7g4_SjQOGdAtYSCW1SpMJ20gFcJRye14PMWlyPkjMmWiBCGRsZeTLKmVXhSEMfbIDqPv5344qYeSPTOtAESeWEiqudkLxqN9gWt1O6P3JkLQ7CoSDGwtdlMTmpL4JjJxUpuWjBwzV145xc11Onl6MzeYzJU9EwVXWI');
-      await AsyncStorage.setItem('email', this.state.email);
-      await AsyncStorage.setItem('name', obj.user.firstName);
-      this.props.navigation.navigate('Product');
-      this.props.setLoginStatus(true)
-
+      await AsyncStorage.setItem('jwtToken', obj.result.access_token);
+      await AsyncStorage.setItem('email', obj.result.email);
+      await AsyncStorage.setItem('name', obj.result.firstName);
     } catch (error) {
-      // Error saving data
+      console.log('error');
+      
     }
   };
 
   render() {
     const { result } = this.state;
-    console.log(result)
     return (
       <>
-        <NavBarDefault name={'Login'} />
+        <NavBarDefault name={'Login'}   onPress={() => this.proceedBack()}/>
+        <ScrollView>
           <View style={styles.container}>
             <View style={styles.login_text_bg}>
               {this.state.spinner == true
@@ -157,10 +161,12 @@ class Login extends React.Component {
                 : <Text style={styles.login_text}></Text>}
 
             </View>
-            <Image
-              style={{ width: '58%', height: '22%', marginTop: '20%' }}
-              source={require('../../assets/image/logo.png')}
-            />
+            <View style={styles.logo}>
+              <Image
+                style={{ width: 250, height: 170, marginBottom: '10%' }}
+                source={require('../../assets/image/logo.png')}
+              />
+            </View>
             <View style={styles.text_fild_set}>
               <TextInput
                 style={styles.textStyle}
@@ -220,15 +226,18 @@ class Login extends React.Component {
                 name={"LOGIN"}
               />
             </View>
-            <View style={{ marginBottom: '40%' }}>
-              <Text style={{ color: AppColor.red, marginTop: 10 }}>
-                Forget Password?
+            <Text style={{ color: AppColor.red, marginTop: 10 }}>
+              Forget Password?
               </Text>
-              <Text style={{ color: AppColor.gray, marginTop: 10 }}>
-                Don't have an account?
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('RegistrationFirst') }}>
+              <View style={{ marginBottom: '40%', alignItems: 'center' }}>
+                <Text style={{ color: AppColor.gray, marginTop: 20 }} >
+                  Don't have an account?
               </Text>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
+        </ScrollView>
       </>
     );
   }
@@ -264,6 +273,11 @@ const styles = {
   },
   line_error: {
     width: '90%'
+  },
+  logo: {
+    height: '30%',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 }
 

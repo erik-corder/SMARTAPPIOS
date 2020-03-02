@@ -52,15 +52,15 @@ class Profile extends React.Component {
           </View>
         </View>
         <View style={styles.tabBar}>
-          <TouchableOpacity style={styles.tabItem}>
+          <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('LoginHome') }}>
             <Image source={require('../../assets/image/home_s.png')} style={{ width: 40, height: 40 }}></Image>
             <Text style={{ fontSize: 11 }}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tabItem}>
+          <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Favorite_video') }}>
             <Image source={require('../../assets/image/star_s.png')} style={{ width: 40, height: 40 }}></Image>
             <Text style={{ fontSize: 12 }}>Favorites</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tabItem}>
+          <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('RCPmanual') }}>
             <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
             <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
           </TouchableOpacity>

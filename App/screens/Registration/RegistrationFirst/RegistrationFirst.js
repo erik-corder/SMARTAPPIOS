@@ -5,9 +5,11 @@ import {
     Image,
     ScrollView,
     SafeAreaView,
-    Text
+    Text,
+    ActivityIndicator 
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
+import axios from 'axios';
 
 //components
 import Button from '../../../components/Button/Button';
@@ -18,13 +20,44 @@ import UnderLine from '../../../components/UnderLine/UnderLine';
 import UnderLineRed from '../../../components/UnderLineRed/UnderLineRed';
 
 class RegistrationFirst extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             email: '',
             emailError: '',
-            passwordError: ''
+            passwordError: '',
+            industries: '',
+            Loading: true,
+            dropdownList: [{
+                value:''
+            }]
         }
+    }
+
+    componentDidMount() {
+        this.getIndustries();
+    }
+
+    proceedBack() {
+        this.props.navigation.goBack(null);
+        this.props.navigation.navigate('Home');
+    }
+
+    getIndustries = async () => {
+        axios.get('https://apidev.rcpanz.com.au/api/admin/industries/select')
+            .then((response) => {
+                // handle success
+                const industries = response.data
+                this.setState({ industries });
+                this.setState({ Loading: false })
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
     }
 
     proceedReg = () => {
@@ -50,17 +83,35 @@ class RegistrationFirst extends React.Component {
 
     render() {
 
-        let data = [{
-            value: 'Software',
+        let title = [{
+            value: 'Mr.',
         }, {
-            value: 'Teaching',
+            value: 'Mrs.',
         }, {
-            value: 'Soldure',
+            value: 'Miss',
+        }, {
+            value: 'Other',
         }];
+
+        const { industries, Loading, dropdownList } = this.state
+
+        if (Loading === false) {
+            var dropdown = industries.result.map((element, i) => {
+                dropdownList[i] = element.name;
+            });
+        }
+        
+        let dataList = [];
+
+        dropdownList.forEach(element => {
+            dataList.push(
+                {value: element}
+            )
+        });
 
         return (
             <>
-                <NavBarDefault name={'Registration'} />
+                <NavBarDefault name={'Registration for a new account'}  onPress={() => this.proceedBack()}/>
                 <SafeAreaView>
                     <ScrollView >
                         <View style={styles.container}>
@@ -72,11 +123,12 @@ class RegistrationFirst extends React.Component {
                             </View>
                             <View style={{ width: '85%' }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <TextInput
-                                        style={styles.textInputTitle}
-                                        placeholder="Title"
-                                        placeholderTextColor="#000"
-                                        onChangeText={(text) => this.setState({ title: text })}
+                                    <Dropdown
+                                        label='Title'
+                                        data={title}
+                                        containerStyle={styles.dropdown}
+                                        inputContainerStyle={{ borderBottomColor: 'transparent' }}
+                                        onChangeText={(value) => this.setState({ title: value })}
                                     />
                                     <TextInput
                                         style={styles.textInputFirstName}
@@ -94,7 +146,7 @@ class RegistrationFirst extends React.Component {
                                     />
                                     <TextInput
                                         style={styles.textInput}
-                                        placeholder="Email Address"
+                                        placeholder="Email (will be used as user name)"
                                         placeholderTextColor="#000"
                                         onChangeText={(text) => this.setState({ email: text })}
                                         required
@@ -121,16 +173,25 @@ class RegistrationFirst extends React.Component {
                                     />
                                     <TextInput
                                         style={styles.textInput}
-                                        placeholder="Orgarnization"
+                                        placeholder="Company/Orgarnization"
                                         placeholderTextColor="#000"
                                         onChangeText={(text) => this.setState({ organization: text })}
                                     />
-                                    <Dropdown
-                                        label='Industry'
-                                        data={data}
-                                        style={{ color: '#000' }}
-                                        onChangeText={(value) => this.setState({ industry: value })}
-                                    />
+                                    {
+                                        Loading == false
+                                            ? (
+                                                <Dropdown
+                                                    label='Industry'
+                                                    data={dataList}
+                                                    style={{ color: '#000' }}
+                                                    onChangeText={(name) => this.setState({ industry: name })}
+                                                />
+                                            ) : (
+                                                <ActivityIndicator size="large" color="#0000ff" />
+                                            )
+
+                                    }
+
                                 </View>
                                 <View style={styles.next_btn}>
                                     <Button
@@ -154,20 +215,11 @@ const styles = {
         alignItems: 'center',
         backgroundColor: '#fff',
     },
-    textInputTitle: {
-        height: '100%',
-        borderColor: 'gray',
-        borderWidth: 0,
-        width: '15%',
-        marginRight: 10,
-        marginTop: 10,
-        borderBottomWidth: 2,
-    },
     textInputFirstName: {
         height: '100%',
         borderColor: 'gray',
         borderWidth: 0,
-        width: '85%',
+        width: '80%',
         marginTop: 10,
         borderBottomWidth: 2,
     },
@@ -193,6 +245,16 @@ const styles = {
         color: '#FF0000',
         width: '80%'
     },
+    dropdown: {
+        width: '25%',
+        height: '100%',
+        borderColor: 'gray',
+        borderWidth: 0,
+        // width: '10%',
+        marginRight: 10,
+        marginTop: 10,
+        borderBottomWidth: 2,
+    }
 }
 
 

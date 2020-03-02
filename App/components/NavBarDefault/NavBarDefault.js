@@ -21,15 +21,16 @@ import appColor from '../../src/utils/AppColor';
 
 class NavBarDefault extends React.Component {
 
-    proceeBack = () => {
-        this.props.navigation.goBack();
+    route = () => {
+        const { onPress } = this.props;
+        onPress();
     }
 
     render() {
         return (
             <View style={styles.navbar}>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={() => this.proceeBack()}>
+                    <TouchableOpacity onPress={() => this.route()}>
                         <Image
                             style={{ width: 20, height: 20, marginLeft: 10 }}
                             source={require('../../assets/image/arrow.png')}

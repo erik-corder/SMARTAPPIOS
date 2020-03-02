@@ -10,11 +10,15 @@ import React from 'react';
 import {
   View,
   Text,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 
+const screenWidth = Math.round(Dimensions.get('window').width);
+const screenHeight = Math.round(Dimensions.get('window').height);
 //components
 import Button from '../../components/Button/Button';
+import DefaultButton from '../../components/DefaultButton/DefaultButtom';
 import appText from '../../src/utils/AppText';
 import appColor from '../../src/utils/AppColor';
 import appLogo from '../../src/utils/Assets';
@@ -41,12 +45,35 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          style={{ width: '55%', height: '22%', marginBottom: '10%'}}
+        <View style={styles.logo}>
+          <Image
+            style={{ width: 250, height: 170, marginBottom: '10%' }}
+            source={require('../../assets/image/logo.png')}
+          />
+        </View>
+        <View style={styles.textContiner}>
+          <Text style={{ color: appColor.gray, textAlign: 'center', fontSize: 15 }}>{appText.homeText}</Text>
+        </View>
+        <View style={styles.btn_set}>
+          <View style={styles.log_btn}>
+            <DefaultButton
+              onPress={() => this.proceedLogin()}
+              name={"LOGIN"}
+            />
+          </View>
+          <View style={styles.reg_btn}>
+            <DefaultButton
+              onPress={() => this.proceedReg()}
+              name={"SIGNUP"}
+            />
+          </View>
+        </View>
+        {/* <Image
+          style={{ width: '60%', height: (screenHeight*0.4), marginBottom: '10%'}}
           source={require('../../assets/image/logo.png')}
         />
         <View style={styles.textContiner}>
-          <Text style={{ color: appColor.gray, textAlign: 'center', }}>{appText.homeText}</Text>
+          <Text style={{ color: appColor.gray, textAlign: 'center',fontSize:15 }}>{appText.homeText}</Text>
         </View>
         <View style={styles.btn_set}>
           <View style={styles.log_btn}>
@@ -61,7 +88,7 @@ class Home extends React.Component {
               name={"SIGNUP"}
             />
           </View>
-        </View>
+        </View> */}
       </View>
     );
   }
@@ -70,9 +97,8 @@ class Home extends React.Component {
 const styles = {
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: appColor.white
   },
   log_btn: {
     marginTop: '10%',
@@ -81,11 +107,20 @@ const styles = {
     marginTop: '5%'
   },
   btn_set: {
-    width: '80%'
+    height: '40%',
+    width: '80%',
+    marginTop: '15%'
   },
   textContiner: {
     width: '70%',
-    height: '20%'
+    height: '5%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    height: '45%',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 }
 

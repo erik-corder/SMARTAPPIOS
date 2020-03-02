@@ -54,83 +54,29 @@ class Catalogs extends React.Component {
                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                 </Text>
                                 </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
-                                <View >
-                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
-                                    <Text style={{ fontSize: 17 }}>
-                                        Document 01
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "blue" }}>
-                                        Product
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "#626262" }}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                </Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
-                                <View >
-                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
-                                    <Text style={{ fontSize: 17 }}>
-                                        Document 01
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "blue" }}>
-                                        Product
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "#626262" }}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                </Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.catolog}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
-                                <View >
-                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
-                                    <Text style={{ fontSize: 17 }}>
-                                        Document 01
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "blue" }}>
-                                        Product
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "#626262" }}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                </Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
-                                <View >
-                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
-                                    <Text style={{ fontSize: 17 }}>
-                                        Document 01
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "blue" }}>
-                                        Product
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "#626262" }}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                </Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SingleCatalog') }}>
-                                <View >
-                                    <Image source={require('../../assets/image/doc.jpg')} style={styles.catologThumbnail}></Image>
-                                    <Text style={{ fontSize: 17 }}>
-                                        Document 01
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "blue" }}>
-                                        Product
-                                </Text>
-                                    <Text style={{ fontSize: 12, color: "#626262" }}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                </Text>
-                                </View>
-                            </TouchableOpacity>
+                            </TouchableOpacity>             
+                            
                         </View>
                     </View>
                 </ScrollView >
-                <TabBar />
+                <View style={styles.tabBar}>
+                    <TouchableOpacity style={styles.tabItem}  onPress={() => { this.props.navigation.navigate('LoginHome') }}>
+                        <Image source={require('../../assets/image/home_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('FavoriteManual') }}>
+                        <Image source={require('../../assets/image/star_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 12 }}>Favorites</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem}  onPress={() => { this.props.navigation.navigate('RCPmanual') }}>
+                        <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>RCP Catalogue</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Profile') }}>
+                        <Image source={require('../../assets/image/profile_s.png')} style={{ width: 40, height: 40 }}></Image>
+                        <Text style={{ fontSize: 11 }}>Profile</Text>
+                    </TouchableOpacity>
+                </View>
             </>
         );
     }
@@ -153,6 +99,18 @@ const styles = {
     catologThumbnail: {
         width: '100%',
         height: 100,
+    },
+    tabBar: {
+        height: 70,
+        width: '100%',
+        elevation: 3,
+        flexDirection: 'row',
+        backgroundColor: appColor.yellow,
+        justifyContent: 'space-around'
+    },
+    tabItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }
 

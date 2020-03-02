@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Dimensions,
+    AsyncStorage
 } from 'react-native';
 
 import { createBottomTabNavigation, createAppContainer, DrawerNavigator } from 'react-navigation';
@@ -41,29 +42,50 @@ import Profile from '../Profile/Profile';
 
 
 class LoginHome extends React.Component {
+     
+    constructor(props){
+        super();
+    }
 
-    render() {
+    componentDidMount = () => {
+        this._retrieveName();
+      };
+
+      _retrieveName = async () => {
+        try {
+          const jwtToken = await AsyncStorage.getItem('jwtToken');
+          
+          this.setState({
+            token: jwtToken
+          });
+        } catch (error) {
+          // Error retrieving data
+        }
+        console.log(this.state.token);
+      };
+
+    render() {      
         return (
             <View style={styles.container}>
                 <NavBar />
                 <ScrollView>
                     <View style={styles.body}>
                         <TouchableOpacity onPress={() => { this.props.navigation.navigate('videoCatergory') }}>
-                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.25, paddingVertical: screenHeight * 0.05, marginVertical: '5%', alignItems: 'center' }}>
+                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.26, paddingVertical: screenHeight * 0.08, marginVertical: '5%', alignItems: 'center' }}>
                                 <Image
                                     style={{ width: 120, height: 120, }}
                                     source={require('../../assets/image/video.png')}
                                 />
-                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>Rcp Videos</Text>
+                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>RCP Videos</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { this.props.navigation.navigate('RCPmanual') }}>
-                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.25, paddingVertical: screenHeight * 0.05, marginVertical: '2.5%', alignItems: 'center' }}>
+                            <View style={{ borderWidth: 3, borderRadius: 15, paddingHorizontal: screenWidth * 0.25, paddingVertical: screenHeight * 0.08, marginVertical: '2.5%', alignItems: 'center' }}>
                                 <Image
                                     style={{ width: 120, height: 120, }}
                                     source={require('../../assets/image/Docs.png')}
                                 />
-                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>Rcp Manuals</Text>
+                                <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: '5%' }}>RCP Manuals</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -77,9 +99,9 @@ class LoginHome extends React.Component {
                         <Image source={require('../../assets/image/star_s.png')} style={{ width: 40, height: 40 }}></Image>
                         <Text style={{ fontSize: 12 }}>Favorites</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.tabItem}>
+                    <TouchableOpacity style={styles.tabItem}  onPress={() => { this.props.navigation.navigate('RCPmanual') }}>
                         <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
-                        <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
+                        <Text style={{ fontSize: 11 }}>RCP Catalogue</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.tabItem}>
                         <Image source={require('../../assets/image/profile_s.png')} style={{ width: 40, height: 40 }}></Image>
@@ -96,10 +118,6 @@ class LoginHome extends React.Component {
 const styles = {
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // backgroundColor: '#fff',
-        // marginTop: '20%'
     },
     body: {
         flex: 1,

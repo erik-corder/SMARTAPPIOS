@@ -9,7 +9,8 @@
 import React from 'react';
 import {
     TouchableOpacity,
-    Text
+    Text,
+    ActivityIndicator
 } from 'react-native';
 
 //color
@@ -19,11 +20,18 @@ class Button extends React.Component {
 
     constructor() {
         super();
+        this.state={
+            touched : false
+        }
     }
 
     route = () => {
         const { onPress } = this.props;
         onPress();
+        this.setState({touched: true});
+        setTimeout(()=>{ 
+            this.setState({touched: false});
+         }, 4000);
     }
 
     render() {
@@ -32,6 +40,15 @@ class Button extends React.Component {
                 <Text style={styles.button}>
                     {this.props.name}
                 </Text>
+                {
+                    this.state.touched == true
+                    ?(
+                        <ActivityIndicator size="small" color="white" />
+                    ):(
+                        <></>
+                    )
+                }
+               
             </TouchableOpacity>
         );
     }

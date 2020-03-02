@@ -22,35 +22,42 @@ import Pdf from 'react-native-pdf';
 // import appColor from '../../src/utils/AppColor';
 // import appLogo from '../../src/utils/Assets';
 // import axios from "axios";
+import NavBarDfault from '../../components/NavBarDefault/NavBarDefault';
 
 
 class SingleCatalog extends React.Component {
 
+    proceedBack(){
+        this.props.navigation.goBack(null);
+        this.props.navigation.navigate('Catalogs');
+      }
 
     render() {
         const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
 
         return (
-            <View style={styles.container}>
-                <Text>PDF Viwer</Text>
-                <Pdf
-                    source={source}
-                    onLoadComplete={(numberOfPages,filePath)=>{
-                        console.log(`number of pages: ${numberOfPages}`);
-                    }}
-                    onPageChanged={(page,numberOfPages)=>{
-                        console.log(`current page: ${page}`);
-                    }}
-                    onError={(error)=>{
-                        console.log(error);
-                    }}
-                    onPressLink={(uri)=>{
-                        console.log(`Link presse: ${uri}`)
-                    }}
-                    style={styles.pdf}
+            <>
+                <NavBarDfault name={'Document 1'}  onPress={() => this.proceedBack()} />
+                <View style={styles.container}>
+                    <Pdf
+                        source={source}
+                        onLoadComplete={(numberOfPages, filePath) => {
+                            console.log(`number of pages: ${numberOfPages}`);
+                        }}
+                        onPageChanged={(page, numberOfPages) => {
+                            console.log(`current page: ${page}`);
+                        }}
+                        onError={(error) => {
+                            console.log(error);
+                        }}
+                        onPressLink={(uri) => {
+                            console.log(`Link presse: ${uri}`)
+                        }}
+                        style={styles.pdf}
                     // enableAntialiasing= {true}
                     />
-            </View>
+                </View>
+            </>
         );
     }
 }

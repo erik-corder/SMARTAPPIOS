@@ -15,6 +15,7 @@ import {
 
 //Navigation
 import AppNavigation from './App/navigation/AppNavigation';
+import PDF  from './App/screens/PdfViwer/PdfViwer';
 
 class App extends React.Component {
   render() {

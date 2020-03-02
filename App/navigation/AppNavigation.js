@@ -25,6 +25,11 @@ import SingleCatalog from '../screens/SingleCatalog/SingleCatalog';
 import Player from '../screens/VideoPlayer/Player/Player';
 import Favorite_video from '../screens/Favorites/Favorite_video';
 import Favorite_catalog from '../screens/Favorites/Favorite_catalog';
+import RegistrationConfirm from '../screens/Registration/RegistrationConfirm/RegistrationConfirm';
+import TrainVideo from '../screens/TrainVideo/TrainVideo';
+import HowToVideo from '../screens/HowToVideo/HowToVideo';
+import TrainingManual from '../screens/TrainingManual/TrainingManual';
+import FavoriteManual from '../screens/FavoriteManula/FavoriteManual';
 
 import Color from '../src/utils/AppColor';
 
@@ -51,7 +56,12 @@ const AppNavigation = createStackNavigator(
     SingleCatalog: {screen: SingleCatalog},
     Player: {screen: Player},
     Favorite_video: {screen: Favorite_video},
-    Favorite_catalog : {screen: Favorite_catalog}
+    Favorite_catalog : {screen: Favorite_catalog},
+    RegistrationConfirm: {screen: RegistrationConfirm},
+    TrainVideo: {screen: TrainVideo},
+    HowToVideo: {screen: HowToVideo},
+    TrainingManual : {screen: TrainingManual},
+    FavoriteManual: {screen: FavoriteManual}
   }, {
     drawerWidth: 250,
     navigationOptions: null,

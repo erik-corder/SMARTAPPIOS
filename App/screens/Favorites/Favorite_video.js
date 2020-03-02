@@ -14,7 +14,8 @@ import {
     TextInput,
     TouchableOpacity,
     FlatList,
-    ScrollView
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 
 import { createBottomTabNavigation, createAppContainer } from 'react-navigation';
@@ -29,6 +30,7 @@ import appColor from '../../src/utils/AppColor';
 import { Thumbnail } from 'react-native-thumbnail-video';
 import NavBar from '../../components/NavBar/NavBar';
 import TabBar from '../../components/TabBar/TabBar';
+import FavoriteVideoCard from '../../components/VideoCard/FavoriteVideoCard';
 
 //Screens
 import Home from '../Home/Home';
@@ -36,6 +38,31 @@ import Login from '../Login/Login';
 import NavBarDefault from '../../components/NavBarDefault/NavBarDefault';
 
 class Favorite_video extends React.Component {
+
+    constructor(){
+        super();
+        this.setState({
+            favoriteVideo: [],
+            Loading: true
+        });
+    }
+
+    componentDidMount(){
+        this._getFavoriteVideo();
+    }
+
+    proceedPlayer = () => {
+        this.props.navigation.goBack(null);
+        this.props.navigation.navigate('Player');
+    }
+
+    _getFavoriteVideo() {
+        // const { params } = this.props.navigation.state;
+        // this.setState({
+        //     howToVideoData: params,
+        //     Loading: false
+        // });
+    }
 
     state = {
         search: '',
@@ -45,11 +72,16 @@ class Favorite_video extends React.Component {
         this.setState({ search });
     };
 
+    proceedBack() {
+        this.props.navigation.goBack(null);
+        this.props.navigation.navigate('LoginHome');
+    }
+
     render() {
-        const { search } = this.state;
+        const { search,Loading } = this.state;
         return (
             <View style={styles.container}>
-                <NavBarDefault name={'Favorite Video'} />
+                <NavBarDefault name={'Favorite Video'} onPress={() => this.proceedBack()} />
                 <ScrollView>
                     <View style={styles.body}>
                         <SearchBar
@@ -60,30 +92,15 @@ class Favorite_video extends React.Component {
                             value={search}
                         />
                         <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
-                            <View>
-                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('Player') }}>
-                                    <Image style={styles.thumbnail} source={require('../../assets/image/sampaleVideo.png')} />
-                                    <Text style={styles.title}>Video</Text>
-                                    <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
-                                    <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>Description of the product goes here, of our planet</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('Player') }}>
-                                    <Image style={styles.thumbnail} source={require('../../assets/image/sampaleVideo.png')} />
-                                    <Text style={styles.title}>Video</Text>
-                                    <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
-                                    <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>Description of the product goes here, of our planet</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('Player') }}>
-                                    <Image style={styles.thumbnail} source={require('../../assets/image/sampaleVideo.png')} />
-                                    <Text style={styles.title}>Video</Text>
-                                    <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
-                                    <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>Description of the product goes here, of our planet</Text>
-                                </TouchableOpacity>
-                            </View>
+                            {Loading ? (
+                                <ActivityIndicator size="large" color="#0000ff" />
+                            ) : (
+                                    // howToVideoData.map((videos, i) => (
+                                    //     <FavoriteVideoCard key={i} videos={videos} onPress={() => this.proceedPlayer()} />
+                                    // ))
+                                    <FavoriteVideoCard onPress={() => this.proceedPlayer()} />
+                                )
+                            }
                         </View>
                     </View>
                 </ScrollView>
@@ -92,11 +109,11 @@ class Favorite_video extends React.Component {
                         <Image source={require('../../assets/image/home_s.png')} style={{ width: 40, height: 40 }}></Image>
                         <Text style={{ fontSize: 11 }}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.tabItem}>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('Favorite_video') }}>
                         <Image source={require('../../assets/image/star_n.png')} style={{ width: 40, height: 40 }}></Image>
                         <Text style={{ fontSize: 12 }}>Favorites</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.tabItem}>
+                    <TouchableOpacity style={styles.tabItem} onPress={() => { this.props.navigation.navigate('RCPManual') }}>
                         <Image source={require('../../assets/image/catalogue_s.png')} style={{ width: 40, height: 40 }}></Image>
                         <Text style={{ fontSize: 11 }}>RCP Ctalogaues</Text>
                     </TouchableOpacity>
