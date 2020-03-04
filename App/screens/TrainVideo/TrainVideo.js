@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     FlatList,
     ScrollView,
+    AsyncStorage,
     ActivityIndicator
 } from 'react-native';
 
@@ -22,6 +23,7 @@ import { createBottomTabNavigation, createAppContainer } from 'react-navigation'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { SearchBar } from 'react-native-elements';
+import axios from 'axios';
 
 //components
 import Button from '../../components/Button/Button';
@@ -53,20 +55,44 @@ class TrainVideo extends React.Component {
     }
 
     componentDidMount() {
-        this._getTrainingVideo();
+        this._retrieveName();
     }
 
     proceedPlayer = () => {
         this.props.navigation.goBack(null);
-        this.props.navigation.navigate('Player');
+        this.props.navigation.navigate('SingleTrainingVideo');
     }
 
+    _retrieveName = async () => {
+        try {
+            const jwtToken = await AsyncStorage.getItem('jwtToken');
+            this.setState({
+                token: jwtToken
+            });
+            this._getTrainingVideo();
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+
     _getTrainingVideo() {
-        const { params } = this.props.navigation.state;
-        this.setState({
-            trainVideoData: params,
-            Loading: false
-        });
+        // const { params } = this.props.navigation.state;
+        // this.setState({
+        //     trainVideoData: params,
+        //     Loading: false
+        // });
+        const AuthStr = 'Bearer '.concat(this.state.token);
+        axios.get('https://apidev.rcpanz.com.au/api/customer/search/videos/11/all/w?search_key=', { headers: { Authorization: AuthStr } })
+            .then(response => {
+                // If request is good...
+                this.setState({
+                    data: response.data.result,
+                    Loading: false
+                });
+            })
+            .catch((error) => {
+                console.log('error ' + error);
+            });
     }
 
     state = {
@@ -79,11 +105,12 @@ class TrainVideo extends React.Component {
 
     render() {
 
-        const { search, trainVideoData, Loading } = this.state;
-        if (Loading === false) {
-            console.log(trainVideoData);
-        }
+        const { search, trainVideoData, Loading, data } = this.state;
+        // if (Loading === false) {
+        //     console.log(trainVideoData);
+        // }
 
+        console.log(data);
         return (
             <View style={styles.container}>
                 <NavBarDefault name={'RCP Training Video'} onPress={() => this.proceedBack()} />
@@ -96,11 +123,11 @@ class TrainVideo extends React.Component {
                             containerStyle={{ backgroundColor: appColor.white, borderWidth: 0, borderColor: appColor.balck, borderTopWidth: 0, height: 50 }}
                             value={search}
                         />
-                        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <View style={{ flex: 1, flexDirection: 'row',flexWrap: 'wrap',alignItems: 'flex-start', justifyContent: 'space-between' }}>
                             {Loading ? (
                                 <ActivityIndicator size="large" color="#0000ff" />
                             ) : (
-                                    trainVideoData.map((videos, i) => (
+                                    data.map((videos, i) => (
                                         <TrainVideoCard key={i} videos={videos} onPress={() => this.proceedPlayer()} />
                                     ))
                                 )
@@ -145,7 +172,7 @@ const styles = {
         height: 100,
         width: 150,
         marginHorizontal: 30,
-        marginVertical: 10,
+        // marginVertical: 10,
         marginTop: '5%'
     },
     title: {

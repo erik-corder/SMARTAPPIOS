@@ -30,6 +30,7 @@ import TrainVideo from '../screens/TrainVideo/TrainVideo';
 import HowToVideo from '../screens/HowToVideo/HowToVideo';
 import TrainingManual from '../screens/TrainingManual/TrainingManual';
 import FavoriteManual from '../screens/FavoriteManula/FavoriteManual';
+import SingleTrainingVideo from '../screens/SingleTrainingVideo/SingleTrainingVideo';
 
 import Color from '../src/utils/AppColor';
 
@@ -61,7 +62,8 @@ const AppNavigation = createStackNavigator(
     TrainVideo: {screen: TrainVideo},
     HowToVideo: {screen: HowToVideo},
     TrainingManual : {screen: TrainingManual},
-    FavoriteManual: {screen: FavoriteManual}
+    FavoriteManual: {screen: FavoriteManual},
+    SingleTrainingVideo: {screen: SingleTrainingVideo}
   }, {
     drawerWidth: 250,
     navigationOptions: null,

@@ -6,7 +6,7 @@ import {
     ScrollView,
     SafeAreaView,
     Text,
-    ActivityIndicator 
+    ActivityIndicator
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import axios from 'axios';
@@ -24,12 +24,24 @@ class RegistrationFirst extends React.Component {
         super();
         this.state = {
             email: '',
-            emailError: '',
-            passwordError: '',
+            title: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            PhoneNo: '',
+            organization: '',
+            industry: '',
+            emailError: false,
+            passwordError: false,
+            firstNameError: false,
+            lastNameError: false,
+            PhoneNoError: false,
+            organizationError: false,
+            industryError: false,
             industries: '',
             Loading: true,
             dropdownList: [{
-                value:''
+                value: ''
             }]
         }
     }
@@ -62,11 +74,90 @@ class RegistrationFirst extends React.Component {
 
     proceedReg = () => {
         const { title, firstName, lastName, email, PhoneNo, organization, industry } = this.state;
-        if (!this.ValidateEmail(email)) {
+        console.log(title)
+        if (title === '') {
             this.setState({
+                titleError: true,
+                emailError: false,
+                passwordError: false,
+                firstNameError: false,
+                lastNameError: false,
+                PhoneNoError: false,
+                organizationError: false,
+                industryError: false,
+                title_error: AppText.title_error
+            });
+        } else if (firstName === '') {
+            this.setState({
+                titleError: false,
+                emailError: false,
+                passwordError: false,
+                firstNameError: true,
+                lastNameError: false,
+                PhoneNoError: false,
+                organizationError: false,
+                industryError: false,
+                firstName_error: AppText.firstName_error
+            });
+        } else if (lastName === '') {
+            this.setState({
+                titleError: false,
+                emailError: false,
+                passwordError: false,
+                firstNameError: false,
+                lastNameError: true,
+                PhoneNoError: false,
+                organizationError: false,
+                industryError: false,
+                lastName_error: AppText.lastName_error
+            });
+        } if (!this.ValidateEmail(email)) {
+            this.setState({
+                titleError: true,
                 emailError: true,
                 passwordError: false,
+                firstNameError: false,
+                lastNameError: false,
+                PhoneNoError: false,
+                organizationError: false,
+                industryError: false,
                 error: AppText.email_error
+            });
+        } else if (PhoneNo === '') {
+            this.setState({
+                titleError: false,
+                emailError: false,
+                passwordError: false,
+                firstNameError: false,
+                lastNameError: false,
+                PhoneNoError: true,
+                organizationError: false,
+                industryError: false,
+                phoneNum_error: AppText.phoneNum_error
+            });
+        } else if (organization === '') {
+            this.setState({
+                titleError: false,
+                emailError: false,
+                passwordError: false,
+                firstNameError: false,
+                lastNameError: false,
+                PhoneNoError: false,
+                organizationError: true,
+                industryError: false,
+                organization_error: AppText.organization_error
+            });
+        } else if (industry === '') {
+            this.setState({
+                titleError: false,
+                emailError: false,
+                passwordError: false,
+                firstNameError: false,
+                lastNameError: false,
+                PhoneNoError: false,
+                organizationError: false,
+                industryError: true,
+                industry_error: AppText.industry_error
             });
         } else {
             const regFirstData = { title, firstName, lastName, email, PhoneNo, organization, industry }
@@ -83,7 +174,7 @@ class RegistrationFirst extends React.Component {
 
     render() {
 
-        let title = [{
+        let titles = [{
             value: 'Mr.',
         }, {
             value: 'Mrs.',
@@ -100,18 +191,18 @@ class RegistrationFirst extends React.Component {
                 dropdownList[i] = element.name;
             });
         }
-        
+
         let dataList = [];
 
         dropdownList.forEach(element => {
             dataList.push(
-                {value: element}
+                { value: element }
             )
         });
 
         return (
             <>
-                <NavBarDefault name={'Registration for a new account'}  onPress={() => this.proceedBack()}/>
+                <NavBarDefault name={'Registration for a new account'} onPress={() => this.proceedBack()} />
                 <SafeAreaView>
                     <ScrollView >
                         <View style={styles.container}>
@@ -123,9 +214,10 @@ class RegistrationFirst extends React.Component {
                             </View>
                             <View style={{ width: '85%' }}>
                                 <View style={{ flexDirection: 'row' }}>
+
                                     <Dropdown
                                         label='Title'
-                                        data={title}
+                                        data={titles}
                                         containerStyle={styles.dropdown}
                                         inputContainerStyle={{ borderBottomColor: 'transparent' }}
                                         onChangeText={(value) => this.setState({ title: value })}
@@ -136,7 +228,31 @@ class RegistrationFirst extends React.Component {
                                         placeholderTextColor="#000"
                                         onChangeText={(text) => this.setState({ firstName: text })}
                                     />
+                                    {this.state.firstNameError == true
+                                        ? (
+                                            <View style={styles.lineBackground}>
+                                                <UnderLineRed />
+                                                <Text style={styles.errorText}>{this.state.firstName_error}</Text>
+                                            </View>
+                                        )
+                                        : (
+                                            <View style={styles.lineBackground}>
+                                                {/* <UnderLine /> */}
+                                            </View>
+                                        )}
                                 </View>
+                                {this.state.titleError == true
+                                    ? (
+                                        <View style={styles.lineBackgroundTitle}>
+                                            <UnderLineRed />
+                                            <Text style={styles.errorText}>{this.state.title_error}</Text>
+                                        </View>
+                                    )
+                                    : (
+                                        <View style={styles.lineBackground}>
+                                            <UnderLine />
+                                        </View>
+                                    )}
                                 <View>
                                     <TextInput
                                         style={styles.textInput}
@@ -144,6 +260,18 @@ class RegistrationFirst extends React.Component {
                                         placeholderTextColor="#000"
                                         onChangeText={(text) => this.setState({ lastName: text })}
                                     />
+                                    {this.state.lastNameError == true
+                                        ? (
+                                            <View style={styles.lineBackground}>
+                                                <UnderLineRed />
+                                                <Text style={styles.errorText}>{this.state.lastName_error}</Text>
+                                            </View>
+                                        )
+                                        : (
+                                            <View style={styles.lineBackground}>
+                                                {/* <UnderLine /> */}
+                                            </View>
+                                        )}
                                     <TextInput
                                         style={styles.textInput}
                                         placeholder="Email (will be used as user name)"
@@ -171,21 +299,57 @@ class RegistrationFirst extends React.Component {
                                         keyboardType={'numeric'}
                                         onChangeText={(text) => this.setState({ PhoneNo: text })}
                                     />
+                                    {this.state.phoneNum_error == true
+                                        ? (
+                                            <View style={styles.lineBackground}>
+                                                <UnderLineRed />
+                                                <Text style={styles.errorText}>{this.state.phoneNum_error}</Text>
+                                            </View>
+                                        )
+                                        : (
+                                            <View style={styles.lineBackground}>
+                                                {/* <UnderLine /> */}
+                                            </View>
+                                        )}
                                     <TextInput
                                         style={styles.textInput}
                                         placeholder="Company/Orgarnization"
                                         placeholderTextColor="#000"
                                         onChangeText={(text) => this.setState({ organization: text })}
                                     />
+                                    {this.state.organizationError == true
+                                        ? (
+                                            <View style={styles.lineBackground}>
+                                                <UnderLineRed />
+                                                <Text style={styles.errorText}>{this.state.organization_error}</Text>
+                                            </View>
+                                        )
+                                        : (
+                                            <View style={styles.lineBackground}>
+                                                {/* <UnderLine /> */}
+                                            </View>
+                                        )}
                                     {
                                         Loading == false
                                             ? (
-                                                <Dropdown
+                                                [<Dropdown
                                                     label='Industry'
                                                     data={dataList}
                                                     style={{ color: '#000' }}
                                                     onChangeText={(name) => this.setState({ industry: name })}
-                                                />
+                                                />,
+                                                this.state.industryError == true
+                                                    ? (
+                                                        <View style={styles.lineBackground}>
+                                                            <UnderLineRed />
+                                                            <Text style={styles.errorText}>{this.state.industry_error}</Text>
+                                                        </View>
+                                                    )
+                                                    : (
+                                                        <View style={styles.lineBackground}>
+                                                            {/* <UnderLine /> */}
+                                                        </View>
+                                                    )]
                                             ) : (
                                                 <ActivityIndicator size="large" color="#0000ff" />
                                             )
@@ -236,8 +400,8 @@ const styles = {
         marginBottom: '30%',
         width: '100%'
     },
-    lineBackground: {
-        width: '103%',
+    lineBackgroundTitle: {
+        // width: '25%',
         height: 1,
     },
     errorText: {

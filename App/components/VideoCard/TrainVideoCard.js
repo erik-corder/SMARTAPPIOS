@@ -47,12 +47,11 @@ class TrainVideoCard extends React.Component {
 
     render() {
         const { videos } = this.props;
-        console.log(videos);
         return (
-            <View>
+            <View style={{ width: '50%' }}>
                 <TouchableOpacity onPress={() => this.route()}>
-                    <Image style={styles.thumbnail} source={{ uri: 'https://airbuddyimage.s3.us-east-2.amazonaws.com/' + videos.url }} />
-                    <Text style={styles.title}>Video</Text>
+                    <Image style={styles.thumbnail} source={{ uri: videos.thumbnail_medium }} />
+                    <Text style={styles.title}>{videos.name}</Text>
                     <Text style={{ fontSize: 15, marginHorizontal: 30, color: "blue" }}>Product</Text>
                     <Text style={{ fontSize: 10, marginHorizontal: 30, color: appColor.gray, width: 100 }}>{videos.description}</Text>
                 </TouchableOpacity>
